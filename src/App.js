@@ -1,8 +1,24 @@
 import React, { Component } from 'react';
+import Header from './components/Header';
+import './styles/App.css';
+
+
 
 class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      //
+    }
+  }
+
   render() {
-    return <div>Hello World</div>;
+    return (
+      <div className='App'>
+        <Header title='CV Maker'/>
+      </div>
+    );
   }
 }
 
