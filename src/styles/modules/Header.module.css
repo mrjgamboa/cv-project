@@ -1,4 +1,6 @@
 .Header {
-  background-color: orange;
+  background-color: var(--middleGround);
+  font-size: calc(100% + 2vw);
   margin: 0;
+  padding: 1rem 1.5rem 1rem 1.5rem;
 }

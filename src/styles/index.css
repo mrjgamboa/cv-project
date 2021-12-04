@@ -1,0 +1,46 @@
+:root {
+  --brightGray: hsl(0, 0%, 92%);
+  --onyx: hsl(0, 0%, 22%);
+  --ufoGreen: hsl(161, 100%, 28%);
+  --languidLavender: hsl(249, 23%, 84%);
+
+  --background: var(--brightGray);
+  --middleGround: var(--ufoGreen);
+  --foreground: var(--onyx);
+  --input: var(--languidLavender);
+}
+
+html,
+body,
+#root,
+.App {
+  height: 100%;
+}
+
+@font-face {
+  font-family: "SpaceMono-Bold";
+  src: local("SpaceMono-Bold"),
+   url("../fonts/space-mono/SpaceMono-Bold.ttf") format("truetype");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "SpaceMono-Regular";
+  src: local("SpaceMono-Regular"),
+   url("../fonts/space-mono/SpaceMono-Regular.ttf") format("truetype");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Muli";
+  src: local("Muli"),
+   url("../fonts/muli/Muli.ttf") format("truetype");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Muli-Bold";
+  src: local("Muli-Bold"),
+   url("../fonts/muli/Muli-Bold.ttf") format("truetype");
+  font-weight: bold;
+}

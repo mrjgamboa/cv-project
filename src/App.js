@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import 'normalize.css';
 import './styles/App.css';
 import Header from './components/Header';
-
-
 
 class App extends Component {
   constructor() {
@@ -17,7 +14,7 @@ class App extends Component {
   render() {
     return (
       <div className='App'>
-        <Header title='CV Maker'/>
+        <Header title='CV M4ker'/>
       </div>
     );
   }

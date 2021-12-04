@@ -1,11 +1,27 @@
-html, body, #root, .App {
-  height: 100%;
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "SpaceMono-Regular", monospace;
+}
+
+h1 strong,
+h2 strong,
+h3 strong,
+h4 strong,
+h5 strong {
+  font-family: "SpaceMono-Bold", monospace;
 }
 
 .App {
-  height: 100%;
-  color: green;
-  background-color: gray;
-  padding: 0;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: "Muli", Georgia, serif;
   margin: 0;
+  padding: 0;
+}
+
+strong {
+  font-family: "Muli-Bold", Georgia, serif;
 }
