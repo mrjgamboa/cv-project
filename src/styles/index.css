@@ -15,13 +15,7 @@ body,
 #root,
 .App {
   height: 100%;
-}
-
-@font-face {
-  font-family: "SpaceMono-Bold";
-  src: local("SpaceMono-Bold"),
-   url("../fonts/space-mono/SpaceMono-Bold.ttf") format("truetype");
-  font-weight: bold;
+  width: 100%;
 }
 
 @font-face {
@@ -29,6 +23,13 @@ body,
   src: local("SpaceMono-Regular"),
    url("../fonts/space-mono/SpaceMono-Regular.ttf") format("truetype");
   font-weight: normal;
+}
+
+@font-face {
+  font-family: "SpaceMono-Bold";
+  src: local("SpaceMono-Bold"),
+   url("../fonts/space-mono/SpaceMono-Bold.ttf") format("truetype");
+  font-weight: bold;
 }
 
 @font-face {

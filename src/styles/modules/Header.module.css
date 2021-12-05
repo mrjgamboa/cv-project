@@ -1,6 +1,9 @@
 .Header {
   background-color: var(--middleGround);
+  padding: 1rem 1.5rem 1rem 1.5rem;
+}
+
+.Header > h1 {
   font-size: calc(100% + 2vw);
   margin: 0;
-  padding: 1rem 1.5rem 1rem 1.5rem;
 }
