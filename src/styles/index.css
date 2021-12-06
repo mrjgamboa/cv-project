@@ -3,11 +3,14 @@
   --onyx: hsl(0, 0%, 22%);
   --ufoGreen: hsl(161, 100%, 28%);
   --languidLavender: hsl(249, 23%, 84%);
+}
 
-  --background: var(--brightGray);
-  --middleGround: var(--ufoGreen);
-  --foreground: var(--onyx);
-  --input: var(--languidLavender);
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin:0;
+  padding:0;
 }
 
 html,
@@ -15,7 +18,6 @@ body,
 #root,
 .App {
   height: 100%;
-  width: 100%;
 }
 
 @font-face {

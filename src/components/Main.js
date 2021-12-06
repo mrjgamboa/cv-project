@@ -4,7 +4,7 @@ import CVForm from './cv-form/CVForm';
 class Main extends Component {
   render() {
     return (
-      <div>
+      <div className='Main'>
         <CVForm />
       </div>
     );

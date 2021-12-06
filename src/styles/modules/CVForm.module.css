@@ -3,12 +3,26 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-color: gray;
-  padding: 1rem 1.5rem 1rem 1.5rem;
+  padding: 1rem 1.5rem;
 }
 
-.CVForm > * {
-  background-color: aqua;
+.CVForm > form > * {
+  border: 1px solid var(--ufoGreen);
+  border-radius: 3px;
+  margin: .5rem 0rem;
+  max-width: calc(500px + 10vw);
+  padding: 1rem;
   width: 100%;
-  margin: .5rem 0rem .5rem 0rem;
+}
+
+.CVForm section {
+  /*  */
+}
+
+.CVForm h2 {
+  /*  */
+}
+
+.CVForm hr {
+  color: var(--languidLavender);
 }

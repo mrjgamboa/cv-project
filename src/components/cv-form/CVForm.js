@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import styles from '../../styles/modules/CVForm.module.css';
+import GeneralSection from './GeneralSection';
+import EducationalSection from './EducationalSection';
+import PracticalSection from './PracticalSection';
 
 class CVForm extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
       generalInfos: [],
@@ -15,9 +18,11 @@ class CVForm extends Component {
   render() {
     return (
       <div className={styles.CVForm}>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
+        <form>
+          <GeneralSection />
+          <EducationalSection />
+          <PracticalSection />
+        </form>
       </div>
     );
   }
