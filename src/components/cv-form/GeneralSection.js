@@ -6,6 +6,10 @@ class GeneralSection extends Component {
       <section>
         <h2>Contact Information</h2>
         <hr />
+        <div>
+          <label>First name</label>
+          <input />
+        </div>
       </section>
     );
   }

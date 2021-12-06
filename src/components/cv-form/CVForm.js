@@ -17,13 +17,11 @@ class CVForm extends Component {
 
   render() {
     return (
-      <div className={styles.CVForm}>
-        <form>
-          <GeneralSection />
-          <EducationalSection />
-          <PracticalSection />
-        </form>
-      </div>
+      <form className={styles.CVForm}>
+        <GeneralSection />
+        <EducationalSection />
+        <PracticalSection />
+      </form>
     );
   }
 }
