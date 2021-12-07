@@ -19,5 +19,6 @@ strong {
   color: var(--onyx);
   font-family: "Muli", Georgia, serif;
   margin:0;
+  overflow: auto;
   padding:0;
 }

@@ -17,10 +17,14 @@ class CVForm extends Component {
 
   render() {
     return (
-      <form className={styles.CVForm}>
+      <form 
+        className={styles.CVForm}
+        noValidate
+      >
         <GeneralSection />
         <EducationalSection />
         <PracticalSection />
+        <button type='submit'>fsd</button> { /* delete later */}
       </form>
     );
   }
