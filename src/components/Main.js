@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CVForm from './cv-form/CVForm';
+import CVForm from './main/CVForm';
 
 class Main extends Component {
   render() {
