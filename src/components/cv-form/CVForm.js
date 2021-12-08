@@ -14,8 +14,29 @@ class CVForm extends Component {
         email: '',
         phoneNumber: '',
       },
-      education: [], // add an id e.g. { id:random, name, etc. }
-      experience: [], // add an id e.g. { id:random, name, etc. }
+      experience: [{ // add an id e.g. { id:random, name, etc. } uniqid?
+        id: '',
+        jobTitle: '',
+        company: '',
+        accomplishments: [{
+          id: '',
+          text: '',
+        }],
+        startDate: '', // year-month e.g. 2020-08
+        endDate: '', // year-month e.g. 2020-08
+      }],
+      education: [{ // add an id e.g. { id:random, name, etc. } uniqid?
+        id: '',
+        academicDegree: '', // BA(bachelor of arts), BS(science), or BFA(fine arts)
+        major: '', // e.g. Business Administration
+        schoolName: '',
+        accomplishments: [{
+          id: '',
+          text: '',
+        }],
+        startDate: '', // year only e.g. 2014
+        endDate: '',  // year only e.g. 2018
+      }],
       data: {},
     };
   }
@@ -28,10 +49,13 @@ class CVForm extends Component {
 
     if (section === 'contact') {
       sectionValue = this.state.contact;
-    } else if (section === 'education') {
+    } else if (section === 'experience') {
+      sectionValue = this.state.experience;
+    } else {
       sectionValue = this.state.education;
     }
 
+    // we might need to put this setState inside the if function
     this.setState({
       ...this.state,
       [section]: {
@@ -103,12 +127,12 @@ class CVForm extends Component {
               <small>Format: 9999-999-9999</small>
             </div>
           </section>
-          <section id='education'>
-            <h2>Education</h2>
-            <hr />
-          </section>
           <section id='experience'>
             <h2>Experience</h2>
+            <hr />
+          </section>
+          <section id='education'>
+            <h2>Education</h2>
             <hr />
           </section>
         </form>
