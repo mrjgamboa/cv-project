@@ -7,8 +7,6 @@ class Main extends Component {
     return (
       <div className='Main'>
         <CVForm />
-        {/* should I make a preview component or just mix it inside
-        CVForm.js? */}
       </div>
     );
   }

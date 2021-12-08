@@ -7,11 +7,11 @@ class CVOverview extends Component {
   // }
   
   render() {
-    console.log(this.props.data);
+    // console.log(this.props.data);
   
     return (
       <div className={styles.CVOverview}>
-
+        <h2>firstName lastName suffix</h2>
       </div>
     );
   }
