@@ -49,24 +49,24 @@ class CVForm extends Component {
 
     if (section === 'contact') {
       sectionValue = this.state.contact;
+
+      this.setState({
+        ...this.state,
+        [section]: {
+          ...sectionValue,
+          [name]: value,
+        },
+      });
     } else if (section === 'experience') {
       sectionValue = this.state.experience;
     } else {
       sectionValue = this.state.education;
     }
-
-    // we might need to put this setState inside the if function
-    this.setState({
-      ...this.state,
-      [section]: {
-        ...sectionValue,
-        [name]: value,
-      },
-    });
   }
 
   render() {
-    const { contact, data } = this.state;
+    const { contact, experience, education, data } = this.state;
+
     console.log(this.state.contact); // temporary console
 
     return (
@@ -130,10 +130,27 @@ class CVForm extends Component {
           <section id='experience'>
             <h2>Experience</h2>
             <hr />
+            {
+              console.log(experience.length)
+              //foreach
+              //div
+              /* experience.length > 0 && // change to 1 later, inside div ^
+              <button
+              type='button'
+              className={styles.delete}
+              Delete</button>
+              */
+            }
+            <button type='button'>Add More</button>
           </section>
           <section id='education'>
             <h2>Education</h2>
             <hr />
+            {
+              console.log(education.length)
+              //foreach
+              //div
+            }
           </section>
         </form>
         <CVOverview data={data}/>
