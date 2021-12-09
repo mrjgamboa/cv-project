@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import uniqid from "uniqid";
 import styles from '../../styles/modules/cv-form/CVForm.module.css';
 import CVOverview from './CVOverview';
 
@@ -15,25 +16,19 @@ class CVForm extends Component {
         phoneNumber: '',
       },
       experience: [{ // add an id e.g. { id:random, name, etc. } uniqid?
-        id: '',
+        id: uniqid(),
         jobTitle: '',
         company: '',
-        accomplishments: [{
-          id: '',
-          text: '',
-        }],
+        accomplishments: [], /* { id: uniqid(), text: '', }*/
         startDate: '', // year-month e.g. 2020-08
         endDate: '', // year-month e.g. 2020-08
       }],
       education: [{ // add an id e.g. { id:random, name, etc. } uniqid?
-        id: '',
+        id: uniqid(),
         academicDegree: '', // BA(bachelor of arts), BS(science), or BFA(fine arts)
         major: '', // e.g. Business Administration
         schoolName: '',
-        accomplishments: [{
-          id: '',
-          text: '',
-        }],
+        accomplishments: [], /* { id: uniqid(), text: '', }*/
         startDate: '', // year only e.g. 2014
         endDate: '',  // year only e.g. 2018
       }],
@@ -68,6 +63,7 @@ class CVForm extends Component {
     const { contact, experience, education, data } = this.state;
 
     console.log(this.state.contact); // temporary console
+    console.log(experience.length, education.length) // temporary console
 
     return (
       <div>
@@ -130,11 +126,21 @@ class CVForm extends Component {
           <section id='experience'>
             <h2>Experience</h2>
             <hr />
-            {
-              console.log(experience.length)
-              //foreach
-              //div
-              /* experience.length > 0 && // change to 1 later, inside div ^
+            {console.log(experience)} {/*delete this*/}
+            {experience.map((exp, index) => {
+              return (
+                <div key={exp.id}>
+                  {/*other inputs*/}
+                  {index > -1 && // change -1 to 0
+                    <button
+                      type='button'
+                      className={styles.delete}
+                    >Delete</button>
+                  }
+                </div>
+              );
+            })}
+            {/* experience.length > 0 && // change to 1 later, inside div
               <button
               type='button'
               className={styles.delete}
@@ -147,7 +153,6 @@ class CVForm extends Component {
             <h2>Education</h2>
             <hr />
             {
-              console.log(education.length)
               //foreach
               //div
             }

@@ -39,6 +39,8 @@
   background-color: var(--languidLavender);
   border: 0;
   border-radius: 3px;
+  caret-color: var(--onyx);
+  color: var(--onyx);
   font-size: 1rem;
   margin: 0 .5rem;
   outline: none;
@@ -58,6 +60,10 @@
   padding: .25rem;
 }
 
+.CVForm .delete {
+  margin: .25rem .25rem .25rem auto;
+}
+
 .CVForm input:focus,
 .CVForm button:focus-visible {
   outline: 2px solid var(--ufoGreen);
@@ -69,7 +75,7 @@
   color: var(--brightGray);
 }
 
-.CVForm button.delete:hover {
+.CVForm .delete:hover {
   background-color: var(--languidLavender);
   color: var(--onyx);
 }
