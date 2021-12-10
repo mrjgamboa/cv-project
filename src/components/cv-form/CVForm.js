@@ -8,6 +8,10 @@ class CVForm extends Component {
     super(props);
 
     this.state = {
+      summary: [{
+        id: uniqid(),
+        text: '',
+      }],
       contact: {
         firstName: '',
         lastName: '',
@@ -126,6 +130,14 @@ class CVForm extends Component {
               />
               <small>Format: 9999-999-9999</small>
             </div>
+          </section>
+          <section id='summary'>
+            <h2>Summary</h2>
+            <hr />
+            {
+              //foreach
+              //div
+            }
           </section>
           <section id='experience'>
             <h2>Experience</h2>
