@@ -32,6 +32,10 @@ class CVForm extends Component {
         startDate: '', // year only e.g. 2014
         endDate: '',  // year only e.g. 2018
       }],
+      skills: [{
+        id: uniqid(),
+        text: '',
+      }],
       data: {},
     };
   }
@@ -151,6 +155,14 @@ class CVForm extends Component {
           </section>
           <section id='education'>
             <h2>Education</h2>
+            <hr />
+            {
+              //foreach
+              //div
+            }
+          </section>
+          <section id='skills'>
+            <h2>Skills</h2>
             <hr />
             {
               //foreach
