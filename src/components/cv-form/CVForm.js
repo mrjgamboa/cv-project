@@ -67,8 +67,27 @@ class CVForm extends Component {
     }
   }
 
+  removeSummary = () => {
+    this.setState({
+      ...this.state,
+      summary: [],
+    });
+  }
+
+  addSummary = () => {
+    this.setState({
+      ...this.state,
+      summary: [{
+        id: uniqid(),
+        text: '',
+      }],
+    });
+  }
+
   render() {
-    const { contact, experience, education, data } = this.state;
+    const { 
+      summary, contact,experience, education, data, skills,
+    } = this.state;
 
     console.log(this.state.contact); // temporary console
     console.log(experience.length, education.length) // temporary console
@@ -132,11 +151,25 @@ class CVForm extends Component {
             </div>
           </section>
           <section id='summary'>
-            <h2>Summary</h2>
+            <h2>Summary (optional)</h2>
             <hr />
-            {
-              //foreach
-              //div
+            {summary.map((content, index) => {
+              return (
+                <div key='content.id'>
+                  <textarea /> { /* or input that can grow */}
+                  <button
+                    type='button'
+                    className={styles.delete}
+                    onClick={this.removeSummary}
+                  >Remove Summary</button>
+                </div>
+              );
+            })}
+            {summary.length === 0 &&
+              <button
+                type='button'
+                onClick={this.addSummary}
+              >Add Summary</button>
             }
           </section>
           <section id='experience'>
@@ -147,7 +180,7 @@ class CVForm extends Component {
               return (
                 <div key={exp.id}>
                   {/*other inputs*/}
-                  {index > -1 && // change -1 to 0
+                  {index > 0 &&
                     <button
                       type='button'
                       className={styles.delete}
