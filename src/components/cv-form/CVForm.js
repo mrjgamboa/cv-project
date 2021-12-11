@@ -52,7 +52,6 @@ class CVForm extends Component {
 
     if (section === 'contact') {
       sectionValue = this.state.contact;
-
       this.setState({
         ...this.state,
         [section]: {
@@ -60,11 +59,33 @@ class CVForm extends Component {
           [name]: value,
         },
       });
+    } else if (section === 'summary') { // turn this one into else?
+      sectionValue = this.state.summary;
+      
     } else if (section === 'experience') {
       sectionValue = this.state.experience;
-    } else {
+    } else if (section === 'education') {
       sectionValue = this.state.education;
+    } else {
+      sectionValue = this.state.skills;
     }
+    /* else
+    const id = e.target.parentElement.id;
+    const setStateV2 = (secVal) => {
+      const targetObject = (object) => object.id === id; 
+      const objectIndex = secVal.findIndex(targetObject);
+      this.setState({
+        ...this.state,
+        [section]: [
+          ...secVal,
+          secVal[objectIndex] = {
+            ...secVal[objectIndex],
+            [name]: value,
+          }
+        ],
+      });
+    };
+    */
   }
 
   removeSummary = () => {
@@ -86,16 +107,16 @@ class CVForm extends Component {
 
   render() {
     const { 
-      summary, contact,experience, education, data, skills,
+      summary, contact,experience, education, skills, data,
     } = this.state;
 
-    console.log(this.state.contact); // temporary console
-    console.log(experience.length, education.length) // temporary console
+    console.log(this.state); // temporary console
 
     return (
       <div>
         <form 
           className={styles.CVForm}
+          id='cvM4kerForm'
           noValidate
         >
           <section id='contact'>
@@ -155,8 +176,13 @@ class CVForm extends Component {
             <hr />
             {summary.map((content, index) => {
               return (
-                <div key='content.id'>
-                  <textarea /> { /* or input that can grow */}
+                <div key={content.id} id={content.id}>
+                  <textarea 
+                    form='cvM4kerForm'
+                    name='summary'
+                    value={content.text}
+                    onChange={this.handleChange}
+                  ></textarea>
                   <button
                     type='button'
                     className={styles.delete}
@@ -175,7 +201,6 @@ class CVForm extends Component {
           <section id='experience'>
             <h2>Experience</h2>
             <hr />
-            {console.log(experience)} {/*delete this*/}
             {experience.map((exp, index) => {
               return (
                 <div key={exp.id}>
