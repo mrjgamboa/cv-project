@@ -10,7 +10,7 @@ class CVForm extends Component {
     this.state = {
       summary: [{
         id: uniqid(),
-        text: '',
+        summary: '',
       }],
       contact: {
         firstName: '',
@@ -19,15 +19,16 @@ class CVForm extends Component {
         email: '',
         phoneNumber: '',
       },
-      experience: [{ // add an id e.g. { id:random, name, etc. } uniqid?
+      experience: [{
         id: uniqid(),
         jobTitle: '',
         company: '',
         accomplishments: [], /* { id: uniqid(), text: '', }*/
-        startDate: '', // year-month e.g. 2020-08
+        startDate: '', // year-month e.g. 2020-08 on preview
+          // str = str.substring(0, str.length-3);
         endDate: '', // year-month e.g. 2020-08
-      }],
-      education: [{ // add an id e.g. { id:random, name, etc. } uniqid?
+      },],
+      education: [{
         id: uniqid(),
         academicDegree: '', // BA(bachelor of arts), BS(science), or BFA(fine arts)
         major: '', // e.g. Business Administration
@@ -38,7 +39,7 @@ class CVForm extends Component {
       }],
       skills: [{
         id: uniqid(),
-        text: '',
+        skill: '',
       }],
       data: {},
     };
@@ -47,11 +48,36 @@ class CVForm extends Component {
   handleChange = (e) => {
     const section = e.target.parentElement.parentElement.id;
     const name = e.target.name;
-    const value = e.target.value;
-    let sectionValue;
+    let value = e.target.value;
 
-    if (section === 'contact') {
-      sectionValue = this.state.contact;
+    const setStateV2 = (sectionValue) => {
+      const targetObject = (obj) => obj.id === e.target.parentElement.id; 
+      const objectIndex = sectionValue.findIndex(targetObject);
+      
+      const newSectionValue = [ ...sectionValue ];
+      newSectionValue[objectIndex] = {
+        ...newSectionValue[objectIndex],
+        [name]: value,
+      };
+
+      this.setState({
+        ...this.state,
+        [section]: [
+          ...newSectionValue,
+        ],
+      });
+    };
+
+    if (section === 'summary') {
+      setStateV2(this.state.summary)
+    } else if (section === 'experience') {
+      setStateV2(this.state.experience)
+    } else if (section === 'education') {
+      setStateV2(this.state.education)
+    } else if (section === 'skills'){
+      setStateV2(this.state.skills)
+    } else {
+      const sectionValue = this.state.contact;
       this.setState({
         ...this.state,
         [section]: {
@@ -59,33 +85,7 @@ class CVForm extends Component {
           [name]: value,
         },
       });
-    } else if (section === 'summary') { // turn this one into else?
-      sectionValue = this.state.summary;
-      
-    } else if (section === 'experience') {
-      sectionValue = this.state.experience;
-    } else if (section === 'education') {
-      sectionValue = this.state.education;
-    } else {
-      sectionValue = this.state.skills;
     }
-    /* else
-    const id = e.target.parentElement.id;
-    const setStateV2 = (secVal) => {
-      const targetObject = (object) => object.id === id; 
-      const objectIndex = secVal.findIndex(targetObject);
-      this.setState({
-        ...this.state,
-        [section]: [
-          ...secVal,
-          secVal[objectIndex] = {
-            ...secVal[objectIndex],
-            [name]: value,
-          }
-        ],
-      });
-    };
-    */
   }
 
   removeSummary = () => {
@@ -180,7 +180,7 @@ class CVForm extends Component {
                   <textarea 
                     form='cvM4kerForm'
                     name='summary'
-                    value={content.text}
+                    value={content.summary}
                     onChange={this.handleChange}
                   ></textarea>
                   <button
@@ -202,26 +202,58 @@ class CVForm extends Component {
             <h2>Experience</h2>
             <hr />
             {experience.map((exp, index) => {
+              const num = index + 1;
               return (
-                <div key={exp.id}>
-                  {/*other inputs*/}
+                <div 
+                  key={exp.id} 
+                  id={exp.id}
+                >
+                  <label htmlFor={`jobTitle${num}`}>Job Title</label>
+                  <input 
+                    type='text' 
+                    name='jobTitle'
+                    id={`jobTitle${num}`}
+                    value={exp.jobTitle}
+                    onChange={this.handleChange}
+                    required
+                  />
+                  <label htmlFor={`company${num}`}>Company</label>
+                  <input 
+                    type='text' 
+                    name='company'
+                    id={`company${num}`}
+                    value={exp.company}
+                    onChange={this.handleChange}
+                    required
+                  />
+                  <label htmlFor={`expStartDAte${num}`}>Start Date</label>
+                  <input
+                    type='date' 
+                    name='startDate'
+                    id={`expStartDAte${num}`}
+                    value={exp.startDate}
+                    onChange={this.handleChange}
+                    required
+                  />
                   {index > 0 &&
                     <button
-                      type='button'
-                      className={styles.delete}
-                    >Delete</button>
+                    type='button'
+                    className={styles.delete}
+                    >Delete</button> // when deleting use button parent id
+                  }
+                  {experience.length > 1 &&
+                    <hr className={styles.hrv2}/>
                   }
                 </div>
               );
             })}
-            {/* experience.length > 0 && // change to 1 later, inside div
-              <button
-              type='button'
-              className={styles.delete}
-              Delete</button>
-              */
+            {experience.length === 1
+              ? <button 
+                  type='button'
+                  className={styles.buttonExtraMarginTop}
+                >Add More</button>
+              : <button type='button'>Add More</button>
             }
-            <button type='button'>Add More</button>
           </section>
           <section id='education'>
             <h2>Education</h2>
