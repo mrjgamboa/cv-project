@@ -8,10 +8,6 @@ class CVForm extends Component {
     super(props);
 
     this.state = {
-      summary: [{
-        id: uniqid(),
-        summary: '',
-      }],
       contact: {
         firstName: '',
         lastName: '',
@@ -19,6 +15,10 @@ class CVForm extends Component {
         email: '',
         phoneNumber: '',
       },
+      summary: [{
+        id: uniqid(),
+        summary: '',
+      }],
       experience: [{
         id: uniqid(),
         jobTitle: '',
@@ -30,7 +30,7 @@ class CVForm extends Component {
       },],
       education: [{
         id: uniqid(),
-        academicDegree: '', // BA(bachelor of arts), BS(science), or BFA(fine arts)
+        academicDegree: '', // initials
         major: '', // e.g. Business Administration
         schoolName: '',
         accomplishments: [], /* { id: uniqid(), text: '', }*/
@@ -45,46 +45,51 @@ class CVForm extends Component {
     };
   }
 
+  // setState for object type section. e.g. contact
+  setStateV1 = (section, sectionValue, name, value) => {
+    this.setState({
+      ...this.state,
+      [section]: {
+        ...sectionValue,
+        [name]: value,
+      },
+    });
+  }
+
+  // setState for array type section. e.g. summary, experience
+  setStateV2 = (e, section, sectionValue, name, value) => {
+    const targetObject = (obj) => obj.id === e.target.parentElement.id; 
+
+    const objectIndex = sectionValue.findIndex(targetObject);
+    const newSectionValue = [ ...sectionValue ];
+    newSectionValue[objectIndex] = {
+      ...newSectionValue[objectIndex],
+      [name]: value,
+    };
+
+    this.setState({
+      ...this.state,
+      [section]: [
+        ...newSectionValue,
+      ],
+    });
+  }
+
   handleChange = (e) => {
     const section = e.target.parentElement.parentElement.id;
     const name = e.target.name;
     let value = e.target.value;
 
-    const setStateV2 = (sectionValue) => {
-      const targetObject = (obj) => obj.id === e.target.parentElement.id; 
-      const objectIndex = sectionValue.findIndex(targetObject);
-      
-      const newSectionValue = [ ...sectionValue ];
-      newSectionValue[objectIndex] = {
-        ...newSectionValue[objectIndex],
-        [name]: value,
-      };
-
-      this.setState({
-        ...this.state,
-        [section]: [
-          ...newSectionValue,
-        ],
-      });
-    };
-
-    if (section === 'summary') {
-      setStateV2(this.state.summary)
+    if (section === 'contact') {
+      this.setStateV1(section, this.state.contact, name, value);
+    } else if (section === 'summary') {
+      this.setStateV2(e, section, this.state.summary, name, value);
     } else if (section === 'experience') {
-      setStateV2(this.state.experience)
+      this.setStateV2(e, section, this.state.experience, name, value);
     } else if (section === 'education') {
-      setStateV2(this.state.education)
-    } else if (section === 'skills'){
-      setStateV2(this.state.skills)
+      this.setStateV2(e, section, this.state.education, name, value);
     } else {
-      const sectionValue = this.state.contact;
-      this.setState({
-        ...this.state,
-        [section]: {
-          ...sectionValue,
-          [name]: value,
-        },
-      });
+      this.setStateV2(e, section, this.state.skills, name, value);
     }
   }
 
@@ -103,6 +108,10 @@ class CVForm extends Component {
         text: '',
       }],
     });
+  }
+
+  handleCheckbox = (e, box, loc) => {
+
   }
 
   render() {
@@ -235,6 +244,29 @@ class CVForm extends Component {
                     onChange={this.handleChange}
                     required
                   />
+                  <label htmlFor={`expEndDAte${num}`}>End Date</label>
+                  {exp.endDate !== 'PRESENT' &&
+                    <input
+                      type='date' 
+                      name='endDate'
+                      id={`expEndDAte${num}`}
+                      value={exp.endDate}
+                      onChange={this.handleChange}
+                      required
+                    />
+                  }
+                  <small>
+                    <input 
+                      type='checkbox' 
+                      id={`checkboxEndDAte${num}`}
+                      onClick={(e) => 
+                        this.handleCheckbox(
+                          e, // resume here
+                        )
+                      }
+                    />
+                    <label htmlFor={`checkboxEndDAte${num}`}>PRESENT</label>
+                  </small>
                   {index > 0 &&
                     <button
                     type='button'

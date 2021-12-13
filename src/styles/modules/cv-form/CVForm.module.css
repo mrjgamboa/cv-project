@@ -44,7 +44,7 @@
 
 .CVForm input,
 .CVForm textarea {
-  background-color: var(--languidLavender);
+  background-color: rgba(208, 205, 224, .5);
   border: 0;
   border-radius: 3px;
   caret-color: var(--onyx);
@@ -53,6 +53,12 @@
   margin: 0 .5rem;
   outline: none;
   padding: .25rem;
+}
+
+.CVForm [type=checkbox] {
+  /* -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; */
 }
 
 .CVForm textarea {
@@ -85,7 +91,11 @@
 }
 
 .CVForm input:focus,
-.CVForm textarea:focus,
+.CVForm textarea:focus {
+  background-color: rgba(208, 205, 224, 1);
+  outline: 2px solid var(--ufoGreen);
+}
+
 .CVForm button:focus-visible {
   outline: 2px solid var(--ufoGreen);
 }
