@@ -27,7 +27,7 @@ class CVForm extends Component {
         startDate: '', // year-month e.g. 2020-08 on preview
           // str = str.substring(0, str.length-3);
         endDate: '', // year-month e.g. 2020-08
-      },],
+      }],
       education: [{
         id: uniqid(),
         academicDegree: '', // initials
@@ -110,8 +110,13 @@ class CVForm extends Component {
     });
   }
 
-  handleCheckbox = (e, box, loc) => {
+  handleCheckbox = (e, index, section, sectionValue, name, value) => {
+    console.log(
+      e.target.checked, section, sectionValue, name, value
+    )
+    if (e.target.checked) {
 
+    }
   }
 
   render() {
@@ -195,7 +200,20 @@ class CVForm extends Component {
                   <button
                     type='button'
                     className={styles.delete}
-                    onClick={this.removeSummary}
+                    onClick={
+                      () => {
+                        const textarea = document
+                          .querySelector(`#${content.id} > textarea`);
+                        if (textarea.value.length > 60) {
+                          if (window.confirm('Continue to remove summary?') 
+                            === true) {
+                            this.removeSummary();
+                          }
+                        } else {
+                          this.removeSummary();
+                        }
+                      }
+                    }
                   >Remove Summary</button>
                 </div>
               );
@@ -258,10 +276,14 @@ class CVForm extends Component {
                   <small>
                     <input 
                       type='checkbox' 
-                      id={`checkboxEndDAte${num}`}
                       onClick={(e) => 
                         this.handleCheckbox(
-                          e, // resume here
+                          e,
+                          index,
+                          'experience',
+                          this.state.experience,
+                          'endDate',
+                          'PRESENT'
                         )
                       }
                     />
