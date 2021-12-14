@@ -112,26 +112,10 @@ class CVForm extends Component {
     }
   }
 
-  removeSummary = () => {
-    this.setState({
-      ...this.state,
-      summary: [],
-    });
-  }
-
-  handleCheckbox = (section, sectionValue, name, value, e, index) => {
-    if (e.target.checked) {
-      this.setStateV2(section, sectionValue, name, value, e, index);
-    } else {
-      this.setStateV2(section, sectionValue, name, '', e, index);
-    }
-  }
-
   addMoreSectionValue = (e) => {
     const section = e.target.getAttribute('data-section');
     let newSectionEmptyValue;
     let sectionValue;
-    // const removeId = e.target.getAttribute("data-remove");
 
     if (section === 'summary') {
       sectionValue = this.state.summary;
@@ -154,6 +138,39 @@ class CVForm extends Component {
         newSectionEmptyValue,
       ]
     });
+  }
+
+  deleteOneSectionValue = (e) => {
+    const section = e.target.getAttribute('data-section');
+    const index = e.target.getAttribute('data-index');
+    let sectionValue;
+    // resume here
+    if (section === 'summary') {
+      sectionValue = this.state.summary;
+    } else if (section === 'experience') {
+      sectionValue = this.state.experience;
+    } else if (section === 'education') {
+      sectionValue = this.state.education;
+    } else if (section === 'skills') {
+      sectionValue = this.state.skills;
+    }
+
+    sectionValue.splice(index, 1);
+    console.log(sectionValue)
+    this.setState({
+      ...this.state,
+      [section]: [
+        ...sectionValue,
+      ],
+    });
+  }
+
+  handleCheckbox = (section, sectionValue, name, value, e, index) => {
+    if (e.target.checked) {
+      this.setStateV2(section, sectionValue, name, value, e, index);
+    } else {
+      this.setStateV2(section, sectionValue, name, '', e, index);
+    }
   }
 
   render() {
@@ -237,17 +254,17 @@ class CVForm extends Component {
                   <button
                     type='button'
                     className={styles.delete}
+                    data-index={index}
+                    data-section='summary'
                     onClick={
-                      () => {
-                        const textarea = document
-                          .querySelector(`#${content.id} > textarea`);
-                        if (textarea.value.length > 60) {
+                      (e) => {
+                        if (content.summary.length > 60) {
                           if (window.confirm('Continue to remove summary?') 
                             === true) {
-                            this.removeSummary();
+                            this.deleteOneSectionValue(e);
                           }
                         } else {
-                          this.removeSummary();
+                          this.deleteOneSectionValue(e);
                         }
                       }
                     }
@@ -273,6 +290,9 @@ class CVForm extends Component {
                   key={exp.id} 
                   id={exp.id}
                 >
+                  {experience.length > 1 &&
+                    <span>{`#${num}`}</span>
+                  }
                   <label htmlFor={`jobTitle${num}`}>Job Title</label>
                   <input 
                     type='text' 
@@ -327,31 +347,34 @@ class CVForm extends Component {
                     />
                     <label htmlFor={`checkboxEndDAte${num}`}>PRESENT</label>
                   </small>
-                  {index > 0 &&
-                    <button
+                  <button
                     type='button'
                     className={styles.delete}
-                    >Delete</button> // when deleting use button parent id
-                  }
+                    data-index={index}
+                    data-section='experience'
+                    onClick={this.deleteOneSectionValue}
+                  >
+                    {experience.length === 1
+                      ? 'No Experience'
+                      : 'Delete'
+                    }
+                  </button>
                   {experience.length > 1 &&
                     <hr className={styles.hrv2}/>
                   }
                 </div>
               );
             })}
-            {experience.length === 1
-              ? <button 
-                  type='button'
-                  className={styles.buttonExtraMarginTop}
-                  data-section='experience'
-                  onClick={this.addMoreSectionValue}
-                >Add More</button>
-              : <button 
-                  type='button'
-                  data-section='experience'
-                  onClick={this.addMoreSectionValue}
-                >Add More</button>
-            }
+            <button 
+              type='button'
+              data-section='experience'
+              onClick={this.addMoreSectionValue}
+            >
+              {experience.length === 0
+                ? 'Add Experience'
+                : 'Add More'
+              }
+            </button>
           </section>
           <section id='education'>
             <h2>Education</h2>

@@ -26,7 +26,7 @@
 }
 
 .CVForm .hrv2 {
-  margin: .5rem .5rem .5rem .25rem;
+  margin: 1rem .5rem 1rem .25rem;
   border: 0;
   border-bottom: 2px dashed var(--brightGray);
   background: rgba(0, 0, 0, 0.15);
@@ -55,10 +55,35 @@
   padding: .25rem;
 }
 
-.CVForm [type=checkbox] {
-  /* -webkit-appearance: none;
+.CVForm input[type=checkbox] {
+  -webkit-appearance: none;
   -moz-appearance: none;
-  appearance: none; */
+  -o-appearance: none;
+  appearance:none;
+  background-color: var(--languidLavender);
+  border: 1px solid var(--rhythm);
+  box-shadow: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 2em;
+  width: .7rem;
+  height: .7rem;
+  position: relative;
+}
+
+.CVForm input[type=checkbox]:checked {
+  background-color: var(--brightGray);
+  border-color: var(--languidLavender);
+}
+
+.CVForm input[type=checkbox]:checked::after {
+  content: ' \2714';
+  color: var(--ufoGreen);
+  font-size: 1rem;
+  position: absolute;
+  inset: -.3rem 0 0 0;
+  -webkit-text-stroke-color: var(--onyx);
+  -webkit-text-stroke-width: 1px;
 }
 
 .CVForm textarea {
@@ -81,21 +106,23 @@
   padding: .25rem;
 }
 
+.CVForm span {
+  color: var(--rhythm);
+  font-style: italic;
+}
+
 .CVForm .delete {
   border-color: var(--mediumVermilion);
   margin: .75rem .5rem .25rem auto;
 }
 
-.CVForm .buttonExtraMarginTop {
-  margin: .75rem .5rem .25rem .25rem;
-}
-
-.CVForm input:focus,
+.CVForm input:not([type=checkbox]):focus,
 .CVForm textarea:focus {
   background-color: rgba(208, 205, 224, 1);
   outline: 2px solid var(--ufoGreen);
 }
 
+.CVForm input[type=checkbox]:focus-visible,
 .CVForm button:focus-visible {
   outline: 2px solid var(--ufoGreen);
 }

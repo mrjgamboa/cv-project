@@ -3,7 +3,8 @@
   --onyx: hsl(0, 0%, 22%);
   --ufoGreen: hsl(161, 100%, 28%);
   --languidLavender: hsl(249, 23%, 84%);
-  --mediumVermilion: #D45335;
+  --mediumVermilion: hsl(11, 65%, 52%);
+  --rhythm: hsl(249, 23%, 54%);
 }
 
 *,
