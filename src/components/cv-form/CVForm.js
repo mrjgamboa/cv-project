@@ -7,19 +7,15 @@ class CVForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      contact: {
-        firstName: '',
-        lastName: '',
-        suffix: '',
-        email: '',
-        phoneNumber: '',
-      },
-      summary: [{
+    this.createSummary = () => {
+      return {
         id: uniqid(),
         summary: '',
-      }],
-      experience: [{
+      };
+    };
+
+    this.createExperience = () => {
+      return {
         id: uniqid(),
         jobTitle: '',
         company: '',
@@ -27,8 +23,11 @@ class CVForm extends Component {
         startDate: '', // year-month e.g. 2020-08 on preview
           // str = str.substring(0, str.length-3);
         endDate: '', // year-month e.g. 2020-08
-      }],
-      education: [{
+      };
+    };
+
+    this.createEducation = () => {
+      return {
         id: uniqid(),
         academicDegree: '', // initials
         major: '', // e.g. Business Administration
@@ -36,17 +35,34 @@ class CVForm extends Component {
         accomplishments: [], /* { id: uniqid(), text: '', }*/
         startDate: '', // year only e.g. 2014
         endDate: '',  // year only e.g. 2018
-      }],
-      skills: [{
+      };
+    };
+
+    this.createSkill = () => {
+      return {
         id: uniqid(),
         skill: '',
-      }],
+      };
+    };
+
+    this.state = {
       data: {},
+      contact: {
+        firstName: '',
+        lastName: '',
+        suffix: '',
+        email: '',
+        phoneNumber: '',
+      },
+      summary: [this.createSummary()],
+      experience: [this.createExperience()],
+      education: [this.createEducation()],
+      skills: [this.createSkill()],
     };
   }
 
-  // setState for object type section. e.g. contact
   setStateV1 = (section, sectionValue, name, value) => {
+    // setState for object type section. e.g. contact
     this.setState({
       ...this.state,
       [section]: {
@@ -56,11 +72,14 @@ class CVForm extends Component {
     });
   }
 
-  // setState for array type section. e.g. summary, experience
-  setStateV2 = (e, section, sectionValue, name, value) => {
-    const targetObject = (obj) => obj.id === e.target.parentElement.id; 
+  setStateV2 = (section, sectionValue, name, value, e, objIndex) => {
+    // setState for array type section. e.g. summary, experience
+    let objectIndex = objIndex;
+    if (objectIndex == null) {
+      const targetObject = (obj) => obj.id === e.target.parentElement.id; 
+      objectIndex = sectionValue.findIndex(targetObject);
+    }
 
-    const objectIndex = sectionValue.findIndex(targetObject);
     const newSectionValue = [ ...sectionValue ];
     newSectionValue[objectIndex] = {
       ...newSectionValue[objectIndex],
@@ -83,13 +102,13 @@ class CVForm extends Component {
     if (section === 'contact') {
       this.setStateV1(section, this.state.contact, name, value);
     } else if (section === 'summary') {
-      this.setStateV2(e, section, this.state.summary, name, value);
+      this.setStateV2(section, this.state.summary, name, value, e);
     } else if (section === 'experience') {
-      this.setStateV2(e, section, this.state.experience, name, value);
+      this.setStateV2(section, this.state.experience, name, value, e);
     } else if (section === 'education') {
-      this.setStateV2(e, section, this.state.education, name, value);
-    } else {
-      this.setStateV2(e, section, this.state.skills, name, value);
+      this.setStateV2(section, this.state.education, name, value, e);
+    } else if (section === 'skills') {
+      this.setStateV2(section, this.state.skills, name, value, e);
     }
   }
 
@@ -100,23 +119,41 @@ class CVForm extends Component {
     });
   }
 
-  addSummary = () => {
-    this.setState({
-      ...this.state,
-      summary: [{
-        id: uniqid(),
-        text: '',
-      }],
-    });
+  handleCheckbox = (section, sectionValue, name, value, e, index) => {
+    if (e.target.checked) {
+      this.setStateV2(section, sectionValue, name, value, e, index);
+    } else {
+      this.setStateV2(section, sectionValue, name, '', e, index);
+    }
   }
 
-  handleCheckbox = (e, index, section, sectionValue, name, value) => {
-    console.log(
-      e.target.checked, section, sectionValue, name, value
-    )
-    if (e.target.checked) {
+  addMoreSectionValue = (e) => {
+    const section = e.target.getAttribute('data-section');
+    let newSectionEmptyValue;
+    let sectionValue;
+    // const removeId = e.target.getAttribute("data-remove");
 
+    if (section === 'summary') {
+      sectionValue = this.state.summary;
+      newSectionEmptyValue = this.createSummary();
+    } else if (section === 'experience') {
+      sectionValue = this.state.experience;
+      newSectionEmptyValue = this.createExperience();
+    } else if (section === 'education') {
+      sectionValue = this.state.education;
+      newSectionEmptyValue = this.createEducation();
+    } else if (section === 'skills') {
+      sectionValue = this.state.skills;
+      newSectionEmptyValue = this.createSkill();
     }
+
+    this.setState({
+      ...this.state,
+      [section]: [
+        ...sectionValue,
+        newSectionEmptyValue,
+      ]
+    });
   }
 
   render() {
@@ -221,7 +258,8 @@ class CVForm extends Component {
             {summary.length === 0 &&
               <button
                 type='button'
-                onClick={this.addSummary}
+                data-section='summary'
+                onClick={this.addMoreSectionValue}
               >Add Summary</button>
             }
           </section>
@@ -278,12 +316,12 @@ class CVForm extends Component {
                       type='checkbox' 
                       onClick={(e) => 
                         this.handleCheckbox(
-                          e,
-                          index,
                           'experience',
                           this.state.experience,
                           'endDate',
-                          'PRESENT'
+                          'PRESENT',
+                          e,
+                          index,
                         )
                       }
                     />
@@ -305,8 +343,14 @@ class CVForm extends Component {
               ? <button 
                   type='button'
                   className={styles.buttonExtraMarginTop}
+                  data-section='experience'
+                  onClick={this.addMoreSectionValue}
                 >Add More</button>
-              : <button type='button'>Add More</button>
+              : <button 
+                  type='button'
+                  data-section='experience'
+                  onClick={this.addMoreSectionValue}
+                >Add More</button>
             }
           </section>
           <section id='education'>
