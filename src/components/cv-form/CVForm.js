@@ -14,11 +14,22 @@ class CVForm extends Component {
       };
     };
 
+    this.accomplishment = () => {
+      return {
+        id: uniqid(),
+        sentence: '',
+      };
+    };
+
     this.createExperience = () => {
       return {
         id: uniqid(),
         jobTitle: '',
         company: '',
+        accomplishment: { // this value will be push to accomplishments
+          id: uniqid(),
+          sentence: '',
+        },
         accomplishments: [], /* { id: uniqid(), text: '', }*/
         startDate: '', // year-month e.g. 2020-08 on preview
           // str = str.substring(0, str.length-3);
@@ -32,6 +43,10 @@ class CVForm extends Component {
         academicDegree: '', // initials
         major: '', // e.g. Business Administration
         schoolName: '',
+        accomplishment: {
+          id: uniqid(),
+          sentence: '',
+        },
         accomplishments: [], /* { id: uniqid(), text: '', }*/
         startDate: '', // year only e.g. 2014
         endDate: '',  // year only e.g. 2018
@@ -62,7 +77,7 @@ class CVForm extends Component {
   }
 
   setStateV1 = (section, sectionValue, name, value) => {
-    // setState for object type section. e.g. contact
+    // setState for object {} type section. e.g. contact
     this.setState({
       ...this.state,
       [section]: {
@@ -74,16 +89,25 @@ class CVForm extends Component {
 
   setStateV2 = (section, sectionValue, name, value, e, objIndex) => {
     // setState for array type section. e.g. summary, experience
+    const newSectionValue = [ ...sectionValue ];
+    let newValue = value;
     let objectIndex = objIndex;
+
     if (objectIndex == null) {
       const targetObject = (obj) => obj.id === e.target.parentElement.id; 
       objectIndex = sectionValue.findIndex(targetObject);
     }
 
-    const newSectionValue = [ ...sectionValue ];
+    if (name === 'accomplishment') {
+      newValue = {
+        ...newSectionValue[objectIndex].accomplishment,
+        sentence: value,
+      };
+    }
+
     newSectionValue[objectIndex] = {
       ...newSectionValue[objectIndex],
-      [name]: value,
+      [name]: newValue,
     };
 
     this.setState({
@@ -94,40 +118,49 @@ class CVForm extends Component {
     });
   }
 
+  getSectionValue = (section) => {
+    let sectionValue;
+    if (section === 'summary') {
+      sectionValue = this.state.summary;
+    } else if (section === 'experience') {
+      sectionValue = this.state.experience;
+    } else if (section === 'education') {
+      sectionValue = this.state.education;
+    } else if (section === 'skills') {
+      sectionValue = this.state.skills;
+    }
+    return sectionValue;
+  }
+
   handleChange = (e) => {
+    const arrayTypeSections = [
+      'summary', 'experience', 'education', 'skills',
+    ];
     const section = e.target.parentElement.parentElement.id;
     const name = e.target.name;
     let value = e.target.value;
 
     if (section === 'contact') {
       this.setStateV1(section, this.state.contact, name, value);
-    } else if (section === 'summary') {
-      this.setStateV2(section, this.state.summary, name, value, e);
-    } else if (section === 'experience') {
-      this.setStateV2(section, this.state.experience, name, value, e);
-    } else if (section === 'education') {
-      this.setStateV2(section, this.state.education, name, value, e);
-    } else if (section === 'skills') {
-      this.setStateV2(section, this.state.skills, name, value, e);
+    } else if (arrayTypeSections.includes(section)) {
+      this.setStateV2(
+        section, this.getSectionValue(section), name, value, e
+      );
     }
   }
 
   addMoreSectionValue = (e) => {
     const section = e.target.getAttribute('data-section');
+    const sectionValue = this.getSectionValue(section);
     let newSectionEmptyValue;
-    let sectionValue;
 
     if (section === 'summary') {
-      sectionValue = this.state.summary;
       newSectionEmptyValue = this.createSummary();
     } else if (section === 'experience') {
-      sectionValue = this.state.experience;
       newSectionEmptyValue = this.createExperience();
     } else if (section === 'education') {
-      sectionValue = this.state.education;
       newSectionEmptyValue = this.createEducation();
     } else if (section === 'skills') {
-      sectionValue = this.state.skills;
       newSectionEmptyValue = this.createSkill();
     }
 
@@ -142,21 +175,10 @@ class CVForm extends Component {
 
   deleteOneSectionValue = (e) => {
     const section = e.target.getAttribute('data-section');
+    const sectionValue = this.getSectionValue(section);
     const index = e.target.getAttribute('data-index');
-    let sectionValue;
-    // resume here
-    if (section === 'summary') {
-      sectionValue = this.state.summary;
-    } else if (section === 'experience') {
-      sectionValue = this.state.experience;
-    } else if (section === 'education') {
-      sectionValue = this.state.education;
-    } else if (section === 'skills') {
-      sectionValue = this.state.skills;
-    }
 
     sectionValue.splice(index, 1);
-    console.log(sectionValue)
     this.setState({
       ...this.state,
       [section]: [
@@ -171,6 +193,28 @@ class CVForm extends Component {
     } else {
       this.setStateV2(section, sectionValue, name, '', e, index);
     }
+  }
+
+  addToList = (e) => {
+    const index = e.target.getAttribute('data-index');
+    const section = e.target.getAttribute('data-section');
+    const sectionValue = this.getSectionValue(section);
+    
+    sectionValue[index].accomplishments = [
+      ...sectionValue[index].accomplishments,
+      sectionValue[index].accomplishment
+    ];
+
+    sectionValue[index].accomplishment = {
+      ...this.accomplishment(),
+    };
+
+    this.setState({
+      ...this.state,
+      [section]: [
+        ...sectionValue,
+      ],
+    });
   }
 
   render() {
@@ -347,6 +391,45 @@ class CVForm extends Component {
                     />
                     <label htmlFor={`checkboxEndDAte${num}`}>PRESENT</label>
                   </small>
+                  <label htmlFor={`expAccomplishment${num}`}>Accomplishment</label>
+                  <input // if !str.trim().length
+                    type='text'
+                    name='accomplishment'
+                    id={`expAccomplishment${num}`}
+                    value={exp.accomplishment.sentence}
+                    // need new function, replace handleChange
+                    onChange={this.handleChange}
+                    required
+                  />
+                  {/* "add" button here,
+                      adds the value to the list/Accomplishments,
+                      reset the value of exp.jobSuccess */
+                  }
+                  <button
+                    type='button'
+                    className={styles.addToList}
+                    data-index={index}
+                    data-section='experience'
+                    onClick={this.addToList}
+                  >
+                    Add To List
+                  </button>
+                  {exp.accomplishments.length > 0 &&
+                    <>
+                      <label htmlFor={`act${num}`}>
+                        List of Accomplishments
+                      </label>
+                      <div className={styles.list}>
+                        <ul>
+                          {exp.accomplishments.map((item) => {
+                            return (
+                              <li key={item.id}>{item.sentence}</li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+                    </>
+                  }
                   <button
                     type='button'
                     className={styles.delete}
@@ -356,7 +439,7 @@ class CVForm extends Component {
                   >
                     {experience.length === 1
                       ? 'No Experience'
-                      : 'Delete'
+                      : `Delete #${num}`
                     }
                   </button>
                   {experience.length > 1 &&
