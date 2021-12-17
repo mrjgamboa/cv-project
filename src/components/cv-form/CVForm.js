@@ -200,6 +200,11 @@ class CVForm extends Component {
     const section = e.target.getAttribute('data-section');
     const sectionValue = this.getSectionValue(section);
     
+    if (!sectionValue[index].accomplishment
+      .sentence.trim().length) { 
+      return; 
+    }
+
     sectionValue[index].accomplishments = [
       ...sectionValue[index].accomplishments,
       sectionValue[index].accomplishment
@@ -209,6 +214,7 @@ class CVForm extends Component {
       ...this.accomplishment(),
     };
 
+    
     this.setState({
       ...this.state,
       [section]: [
@@ -378,6 +384,7 @@ class CVForm extends Component {
                   <small>
                     <input 
                       type='checkbox' 
+                      id={`expCheckboxEndDAte${num}`}
                       onClick={(e) => 
                         this.handleCheckbox(
                           'experience',
@@ -389,10 +396,14 @@ class CVForm extends Component {
                         )
                       }
                     />
-                    <label htmlFor={`checkboxEndDAte${num}`}>PRESENT</label>
+                    <label htmlFor={`expCheckboxEndDAte${num}`}>
+                      PRESENT
+                    </label>
                   </small>
-                  <label htmlFor={`expAccomplishment${num}`}>Accomplishment</label>
-                  <input // if !str.trim().length
+                  <label htmlFor={`expAccomplishment${num}`}>
+                    Accomplishment
+                  </label>
+                  <input
                     type='text'
                     name='accomplishment'
                     id={`expAccomplishment${num}`}
@@ -401,10 +412,6 @@ class CVForm extends Component {
                     onChange={this.handleChange}
                     required
                   />
-                  {/* "add" button here,
-                      adds the value to the list/Accomplishments,
-                      reset the value of exp.jobSuccess */
-                  }
                   <button
                     type='button'
                     className={styles.addToList}
@@ -416,10 +423,13 @@ class CVForm extends Component {
                   </button>
                   {exp.accomplishments.length > 0 &&
                     <>
-                      <label htmlFor={`act${num}`}>
+                      <label htmlFor={`expList${num}`}>
                         List of Accomplishments
                       </label>
-                      <div className={styles.list}>
+                      <div 
+                        className={styles.list}
+                        id={`expList${num}`}
+                      >
                         <ul>
                           {exp.accomplishments.map((item) => {
                             return (
@@ -462,10 +472,156 @@ class CVForm extends Component {
           <section id='education'>
             <h2>Education</h2>
             <hr />
-            {
-              //foreach
-              //div
-            }
+            {education.map((educ, index) => {
+              const num = index + 1;
+              return (
+                <div 
+                  key={educ.id} 
+                  id={educ.id}
+                >
+                  {education.length > 1 &&
+                    <span>{`#${num}`}</span>
+                  }
+                  <label htmlFor={`academicDegree${num}`}>
+                    Academic Degree
+                  </label>
+                  <input 
+                    type='text' 
+                    name='academicDegree'
+                    id={`academicDegree${num}`}
+                    value={educ.academicDegree}
+                    onChange={this.handleChange}
+                  />
+                  <label htmlFor={`major${num}`}>Major</label>
+                  <input 
+                    type='text' 
+                    name='major'
+                    id={`major${num}`}
+                    value={educ.major}
+                    onChange={this.handleChange}
+                  />
+                  <label htmlFor={`schoolName${num}`}>
+                    School Name
+                  </label>
+                  <input 
+                    type='text' 
+                    name='schoolName'
+                    id={`schoolName${num}`}
+                    value={educ.schoolName}
+                    onChange={this.handleChange}
+                    required
+                  />
+                  <label htmlFor={`educStartDate${num}`}>
+                    Start Date
+                  </label>
+                  <input
+                    type='date' 
+                    name='startDate'
+                    id={`educStartDate${num}`}
+                    value={educ.startDate}
+                    onChange={this.handleChange}
+                    required
+                  />
+                  <label htmlFor={`educEndDAte${num}`}>
+                    End Date
+                  </label>
+                  {educ.endDate !== 'PRESENT' &&
+                    <input
+                      type='date' 
+                      name='endDate'
+                      id={`educEndDAte${num}`}
+                      value={educ.endDate}
+                      onChange={this.handleChange}
+                      required
+                    />
+                  }
+                  <small>
+                    <input 
+                      type='checkbox' 
+                      id={`educCheckboxEndDAte${num}`}
+                      onClick={(e) => 
+                        this.handleCheckbox(
+                          'education',
+                          this.state.education,
+                          'endDate',
+                          'PRESENT',
+                          e,
+                          index,
+                        )
+                      }
+                    />
+                    <label htmlFor={`educCheckboxEndDAte${num}`}>
+                      PRESENT
+                    </label>
+                  </small>
+                  <label htmlFor={`educAccomplishment${num}`}>
+                    Accomplishment
+                  </label>
+                  <input
+                    type='text'
+                    name='accomplishment'
+                    id={`educAccomplishment${num}`}
+                    value={educ.accomplishment.sentence}
+                    // need new function, replace handleChange
+                    onChange={this.handleChange}
+                    required
+                  />
+                  <button
+                    type='button'
+                    className={styles.addToList}
+                    data-index={index}
+                    data-section='education'
+                    onClick={this.addToList}
+                  >
+                    Add To List
+                  </button>
+                  {educ.accomplishments.length > 0 &&
+                    <>
+                      <label htmlFor={`educList${num}`}>
+                        List of Accomplishments
+                      </label>
+                      <div 
+                        className={styles.list}
+                        id={`educList${num}`}
+                      >
+                        <ul>
+                          {educ.accomplishments.map((item) => {
+                            return (
+                              <li key={item.id}>{item.sentence}</li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+                    </>
+                  }
+                  <button
+                    type='button'
+                    className={styles.delete}
+                    data-index={index}
+                    data-section='education'
+                    onClick={this.deleteOneSectionValue}
+                  >
+                    {education.length === 1
+                      ? 'No Education'
+                      : `Delete #${num}`
+                    }
+                  </button>
+                  {education.length > 1 &&
+                    <hr className={styles.hrv2}/>
+                  }
+                </div>
+              );
+            })}
+            <button 
+              type='button'
+              data-section='education'
+              onClick={this.addMoreSectionValue}
+            >
+              {education.length === 0
+                ? 'Add Education'
+                : 'Add More'
+              }
+            </button>
           </section>
           <section id='skills'>
             <h2>Skills</h2>
