@@ -55,8 +55,11 @@ class CVForm extends Component {
 
     this.createSkill = () => {
       return {
-        id: uniqid(),
-        skill: '',
+        skill: {
+          id: uniqid(),
+          text: '',
+        },
+        skillList: [],
       };
     };
 
@@ -72,17 +75,24 @@ class CVForm extends Component {
       summary: [this.createSummary()],
       experience: [this.createExperience()],
       education: [this.createEducation()],
-      skills: [this.createSkill()],
+      skills: this.createSkill(),
     };
   }
 
   setStateV1 = (section, sectionValue, name, value) => {
     // setState for object {} type section. e.g. contact
+    let newValue = value;
+    if (section === 'skills') {
+      newValue = {
+        ...sectionValue.skill,
+        text: value,
+      };
+    }
     this.setState({
       ...this.state,
       [section]: {
         ...sectionValue,
-        [name]: value,
+        [name]: newValue,
       },
     });
   }
@@ -120,7 +130,10 @@ class CVForm extends Component {
 
   getSectionValue = (section) => {
     let sectionValue;
-    if (section === 'summary') {
+    
+    if (section === 'contact') {
+      sectionValue = this.state.contact;
+    } else if (section === 'summary') {
       sectionValue = this.state.summary;
     } else if (section === 'experience') {
       sectionValue = this.state.experience;
@@ -134,14 +147,16 @@ class CVForm extends Component {
 
   handleChange = (e) => {
     const arrayTypeSections = [
-      'summary', 'experience', 'education', 'skills',
+      'summary', 'experience', 'education',
     ];
     const section = e.target.parentElement.parentElement.id;
     const name = e.target.name;
     let value = e.target.value;
 
-    if (section === 'contact') {
-      this.setStateV1(section, this.state.contact, name, value);
+    if ((section === 'contact') || section === 'skills') {
+      this.setStateV1(
+        section, this.getSectionValue(section), name, value
+      );
     } else if (arrayTypeSections.includes(section)) {
       this.setStateV2(
         section, this.getSectionValue(section), name, value, e
@@ -160,8 +175,6 @@ class CVForm extends Component {
       newSectionEmptyValue = this.createExperience();
     } else if (section === 'education') {
       newSectionEmptyValue = this.createEducation();
-    } else if (section === 'skills') {
-      newSectionEmptyValue = this.createSkill();
     }
 
     this.setState({
@@ -199,11 +212,6 @@ class CVForm extends Component {
     const index = e.target.getAttribute('data-index');
     const section = e.target.getAttribute('data-section');
     const sectionValue = this.getSectionValue(section);
-    
-    if (!sectionValue[index].accomplishment
-      .sentence.trim().length) { 
-      return; 
-    }
 
     sectionValue[index].accomplishments = [
       ...sectionValue[index].accomplishments,
@@ -213,13 +221,23 @@ class CVForm extends Component {
     sectionValue[index].accomplishment = {
       ...this.accomplishment(),
     };
-
     
     this.setState({
       ...this.state,
       [section]: [
         ...sectionValue,
       ],
+    });
+  }
+
+  addToSkills = () => {
+    this.setState({
+      ...this.state,
+      skills: {
+        skillList: this.state.skills.skillList
+          .concat(this.state.skills.skill),
+        skill: this.createSkill().skill,
+      },
     });
   }
 
@@ -290,7 +308,7 @@ class CVForm extends Component {
             </div>
           </section>
           <section id='summary'>
-            <h2>Summary (optional)</h2>
+            <h2>Summary</h2>
             <hr />
             {summary.map((content, index) => {
               return (
@@ -417,29 +435,34 @@ class CVForm extends Component {
                     className={styles.addToList}
                     data-index={index}
                     data-section='experience'
+                    disabled={exp.accomplishment.sentence
+                      .trim().length > 0
+                      ? false
+                      : true
+                    }
                     onClick={this.addToList}
                   >
                     Add To List
                   </button>
-                  {exp.accomplishments.length > 0 &&
-                    <>
-                      <label htmlFor={`expList${num}`}>
-                        List of Accomplishments
-                      </label>
-                      <div 
-                        className={styles.list}
-                        id={`expList${num}`}
-                      >
-                        <ul>
-                          {exp.accomplishments.map((item) => {
-                            return (
-                              <li key={item.id}>{item.sentence}</li>
-                            );
-                          })}
-                        </ul>
-                      </div>
-                    </>
-                  }
+                  <details>
+                    <summary>List of Accomplishments</summary>
+                    {exp.accomplishments.length  > 0
+                      ?
+                        <div 
+                          className={styles.list}
+                          id={`expList${num}`}
+                        >
+                          <ul>
+                            {exp.accomplishments.map((item) => {
+                              return (
+                                <li key={item.id}>{item.sentence}</li>
+                              );
+                            })}
+                          </ul>
+                        </div>
+                      : <div>(empty)</div>
+                    }
+                  </details>
                   <button
                     type='button'
                     className={styles.delete}
@@ -448,7 +471,7 @@ class CVForm extends Component {
                     onClick={this.deleteOneSectionValue}
                   >
                     {experience.length === 1
-                      ? 'No Experience'
+                      ? 'Remove Experience'
                       : `Delete #${num}`
                     }
                   </button>
@@ -571,29 +594,34 @@ class CVForm extends Component {
                     className={styles.addToList}
                     data-index={index}
                     data-section='education'
+                    disabled={educ.accomplishment.sentence
+                      .trim().length > 0
+                      ? false
+                      : true
+                    }
                     onClick={this.addToList}
                   >
                     Add To List
                   </button>
-                  {educ.accomplishments.length > 0 &&
-                    <>
-                      <label htmlFor={`educList${num}`}>
-                        List of Accomplishments
-                      </label>
-                      <div 
-                        className={styles.list}
-                        id={`educList${num}`}
-                      >
-                        <ul>
-                          {educ.accomplishments.map((item) => {
-                            return (
-                              <li key={item.id}>{item.sentence}</li>
-                            );
-                          })}
-                        </ul>
-                      </div>
-                    </>
-                  }
+                  <details>
+                    <summary>List of Accomplishments</summary>
+                    {educ.accomplishments.length  > 0
+                      ?
+                        <div 
+                          className={styles.list}
+                          id={`educList${num}`}
+                        >
+                          <ul>
+                            {educ.accomplishments.map((item) => {
+                              return (
+                                <li key={item.id}>{item.sentence}</li>
+                              );
+                            })}
+                          </ul>
+                        </div>
+                      : <div>(empty)</div>
+                    }
+                  </details>
                   <button
                     type='button'
                     className={styles.delete}
@@ -602,7 +630,7 @@ class CVForm extends Component {
                     onClick={this.deleteOneSectionValue}
                   >
                     {education.length === 1
-                      ? 'No Education'
+                      ? 'Remove Education'
                       : `Delete #${num}`
                     }
                   </button>
@@ -626,10 +654,46 @@ class CVForm extends Component {
           <section id='skills'>
             <h2>Skills</h2>
             <hr />
-            {
-              //foreach
-              //div
-            }
+            <div>
+              <label htmlFor='skill'>Skill</label>
+              <input 
+                type='text' 
+                name='skill'
+                id='skill' 
+                value={skills.skill.text}
+                onChange={this.handleChange}
+              />
+              <button
+                type='button'
+                className={styles.addToList}
+                disabled={skills.skill.text.trim().length > 0
+                  ? false
+                  : true
+                }
+                onClick={this.addToSkills}
+              >
+                Add Skill
+              </button>
+              <details>
+                <summary>List of Skills</summary>
+                {skills.skillList.length > 0
+                  ?
+                    <div 
+                      className={styles.list}
+                      id={`skillList`}
+                    >
+                      <ul>
+                        {skills.skillList.map((item) => {
+                          return (
+                            <li key={item.id}>{item.text}</li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  : <div>(empty)</div>
+                }
+              </details>
+            </div>
           </section>
         </form>
         <CVOverview data={data}/>

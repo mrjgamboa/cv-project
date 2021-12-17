@@ -82,7 +82,7 @@
 .CVForm textarea {
   margin: .5rem .5rem 0 .5rem;
   min-height: 60px;
-  line-height: 1.4;
+  line-height: 1.4rem;
   resize: vertical;
 }
 
@@ -104,8 +104,35 @@
   font-style: italic;
 }
 
+.CVForm summary {
+  border-radius: 3px;
+  color: var(--onyx);
+  cursor: pointer;
+  list-style: none;
+  margin: 1rem .5rem .5rem .5rem;
+}
+
+.CVForm summary::-webkit-details-marker {
+  display: none;
+}
+
+.CVForm details summary::before { 
+  content:"\25B7 \0020"; 
+  color: var(--rhythm); 
+}
+
+.CVForm details[open] summary::before { 
+  content:"\25BD \0020"; 
+  color: var(--rhythm); 
+}
+
 .CVForm ul {
   list-style: none;
+}
+
+.CVForm ul li {
+  line-height: 1.4rem;
+  word-wrap: break-word;
 }
 
 .CVForm ul li::before {
@@ -114,7 +141,7 @@
   font-weight: bold;
   display: inline-block;
   width: 1rem;
-  margin-left: -1rem;
+  margin-left: -.9rem;
 }
 
 .CVForm div.list {
@@ -145,6 +172,7 @@
   outline: 2px solid var(--ufoGreen);
 }
 
+.CVForm summary:focus-visible,
 .CVForm input[type=checkbox]:focus-visible,
 .CVForm button:focus-visible {
   outline: 2px solid var(--ufoGreen);
@@ -154,13 +182,21 @@
   outline: 2px solid var(--mediumVermilion);
 }
 
-.CVForm button:hover {
+.CVForm button:not(:disabled):hover {
   background-color: var(--ufoGreen);
   border-color: var(--ufoGreen);
   color: var(--brightGray);
 }
 
+.CVForm button:disabled {
+  cursor: not-allowed;
+}
+
 .CVForm .delete:hover {
   background-color: var(--mediumVermilion);
   border-color: var(--mediumVermilion);
+}
+
+.CVForm summary:hover {
+  color: var(--rhythm);
 }
