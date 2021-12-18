@@ -211,3 +211,11 @@
 .CVForm summary:hover {
   color: var(--rhythm);
 }
+
+.CVForm input.invalid {
+  outline: 2px dashed var(--mediumVermilion);
+}
+
+.CVForm input.invalid:focus {
+  outline: 2px solid var(--mediumVermilion);
+}
