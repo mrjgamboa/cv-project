@@ -7,7 +7,8 @@
   width: 100%;
 }
 
-.CVForm section {
+.CVForm section,
+.CVForm button.submit {
   border-radius: 3px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
   margin: .5rem 0rem;
@@ -25,10 +26,22 @@
   margin: .5rem 0;
 }
 
+.CVForm .hrv2 {
+  margin: 1rem .5rem 1rem .25rem;
+  border: 0;
+  border-bottom: 2px dashed var(--brightGray);
+  background: rgba(0, 0, 0, 0.15);
+}
+
 .CVForm div {
   margin: 0 0 0 .5rem;
   display: flex;
   flex-direction: column;
+}
+
+.CVForm .list {
+  padding: 0 .5rem 0 1rem;
+  margin-right: .5rem;
 }
 
 .CVForm label {
@@ -99,6 +112,26 @@
   padding: .25rem;
 }
 
+.CVForm .delete {
+  border-color: var(--mediumVermilion);
+  margin: .75rem .5rem .25rem auto;
+}
+
+.CVForm .addToList {
+  border-color: var(--languidLavender);
+  margin: .75rem .5rem .25rem auto;
+}
+
+.CVForm .submit {
+  color: var(--onyx);
+  font-family: "SpaceMono-Regular", monospace;
+  font-size: 1.17em;
+  display: block;
+  margin-left: auto;
+  float: right;
+  width: auto;
+}
+
 .CVForm span {
   color: var(--rhythm);
   font-style: italic;
@@ -142,28 +175,6 @@
   display: inline-block;
   width: 1rem;
   margin-left: -.9rem;
-}
-
-.CVForm div.list {
-  padding: 0 .5rem 0 1rem;
-  margin-right: .5rem;
-}
-
-.CVForm .hrv2 {
-  margin: 1rem .5rem 1rem .25rem;
-  border: 0;
-  border-bottom: 2px dashed var(--brightGray);
-  background: rgba(0, 0, 0, 0.15);
-}
-
-.CVForm .delete {
-  border-color: var(--mediumVermilion);
-  margin: .75rem .5rem .25rem auto;
-}
-
-.CVForm .addToList {
-  border-color: var(--languidLavender);
-  margin: .75rem .5rem .25rem auto;
 }
 
 .CVForm input:not([type=checkbox]):focus,

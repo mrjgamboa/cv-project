@@ -65,6 +65,7 @@ class CVForm extends Component {
 
     this.state = {
       data: {},
+      preview: false,
       contact: {
         firstName: '',
         lastName: '',
@@ -243,7 +244,7 @@ class CVForm extends Component {
 
   render() {
     const { 
-      summary, contact,experience, education, skills, data,
+      summary, contact,experience, education, skills, preview, data,
     } = this.state;
 
     console.log(this.state); // temporary console
@@ -695,8 +696,19 @@ class CVForm extends Component {
               </details>
             </div>
           </section>
+          {// if valid form 
+            <button
+              type='button'
+              className={styles.submit}
+            >
+              Create CV
+            </button>
+          }
         </form>
-        <CVOverview data={data}/>
+        {
+          // if button is click // maybe use a state named preview: boolean
+          // <CVOverview data={data}/>
+        }
       </div>
     );
   }
