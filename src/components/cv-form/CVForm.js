@@ -24,32 +24,26 @@ class CVForm extends Component {
     this.createExperience = () => {
       return {
         id: uniqid(),
-        jobTitle: '',
-        company: '',
-        accomplishment: { // this value will be push to accomplishments
-          id: uniqid(),
-          sentence: '',
-        },
+        jobTitle: 'a',
+        company: 'b',
+        accomplishment: this.accomplishment(),
         accomplishments: [], /* { id: uniqid(), text: '', }*/
-        startDate: '', // year-month e.g. 2020-08 on preview
+        startDate: '2021-12-14', // year-month e.g. 2020-08 on preview
           // str = str.substring(0, str.length-3);
-        endDate: '', // year-month e.g. 2020-08
+        endDate: 'PRESENT', // year-month e.g. 2020-08
       };
     };
 
     this.createEducation = () => {
       return {
         id: uniqid(),
-        academicDegree: '', // initials
-        major: '', // e.g. Business Administration
-        schoolName: '',
-        accomplishment: {
-          id: uniqid(),
-          sentence: '',
-        },
+        academicDegree: 'a', // initials
+        major: 'b', // e.g. Business Administration
+        schoolName: 'c',
+        accomplishment: this.accomplishment(),
         accomplishments: [], /* { id: uniqid(), text: '', }*/
-        startDate: '', // year only e.g. 2014
-        endDate: '',  // year only e.g. 2018
+        startDate: '2021-12-14', // year only e.g. 2014
+        endDate: '2021-12-14',  // year only e.g. 2018
       };
     };
 
@@ -67,17 +61,19 @@ class CVForm extends Component {
       data: {},
       preview: false,
       contact: {
-        firstName: '',
-        lastName: '',
+        firstName: 'John',
+        lastName: 'Gamboa',
         suffix: '',
-        email: '',
-        phoneNumber: '',
+        email: 'x@gmail.com',
+        phoneNumber: '9999-999-9999',
       },
       summary: [this.createSummary()],
       experience: [this.createExperience()],
       education: [this.createEducation()],
       skills: this.createSkill(),
     };
+
+    this.setPreviewToFalse = this.setPreviewToFalse.bind(this);
   }
 
   setStateV1 = (section, sectionValue, name, value) => {
@@ -225,10 +221,9 @@ class CVForm extends Component {
     const section = e.target.getAttribute('data-section');
     const sectionValue = this.getSectionValue(section);
 
-    sectionValue[index].accomplishments = [
-      ...sectionValue[index].accomplishments,
-      sectionValue[index].accomplishment
-    ];
+    sectionValue[index].accomplishments = 
+      sectionValue[index].accomplishments
+        .concat(sectionValue[index].accomplishment);
 
     sectionValue[index].accomplishment = {
       ...this.accomplishment(),
@@ -253,10 +248,10 @@ class CVForm extends Component {
     });
   }
 
-  previewSetState = (value) => {
+  setPreviewToFalse = () => {
     this.setState({
       ...this.state,
-      preview: value,
+      preview: false,
     });
   }
 
@@ -273,17 +268,27 @@ class CVForm extends Component {
       }
     });
 
-    (invalid === 0)
-      ? this.previewSetState(true)
-      : invalidInputs[0].focus();
+    if (invalid === 0) {
+      this.setState({
+        ...this.state,
+        data: {
+          contact: this.state.contact,
+          summary: this.state.summary,
+          experience: this.state.experience,
+          education: this.state.education,
+          skills: this.state.skills.skillList,
+        },
+        preview: true,
+      });
+    } else {
+      invalidInputs[0].focus();
+    }
   }
 
   render() {
     const { 
       summary, contact,experience, education, skills, preview, data,
     } = this.state;
-
-    console.log(this.state); // temporary console
 
     return (
       <div>
@@ -441,7 +446,11 @@ class CVForm extends Component {
                       <input 
                         type='checkbox' 
                         id={`expCheckboxEndDAte${num}`}
-                        onClick={(e) => 
+                        checked={exp.endDate === 'PRESENT'
+                          ? true
+                          : false
+                        }
+                        onChange={(e) => 
                           this.handleCheckbox(
                             'experience',
                             this.state.experience,
@@ -599,7 +608,11 @@ class CVForm extends Component {
                       <input 
                         type='checkbox' 
                         id={`educCheckboxEndDAte${num}`}
-                        onClick={(e) => 
+                        checked={educ.endDate === 'PRESENT'
+                          ? true
+                          : false
+                        }
+                        onChange={(e) => 
                           this.handleCheckbox(
                             'education',
                             this.state.education,
@@ -742,9 +755,11 @@ class CVForm extends Component {
             }
           </form>
         }
-        {
-          // preview === true
-          // <CVOverview data={data}/>
+        {preview === true &&
+          <CVOverview 
+            data={data}
+            onClickBtn={this.setPreviewToFalse}
+          />
         }
       </div>
     );
