@@ -7,10 +7,14 @@ class CVForm extends Component {
   constructor(props) {
     super(props);
 
+    const dummy = `Resume paper is a specific type of paper 
+      that you use for your resume. Resume paper is thicker 
+      than standard printing or copy paper and might be a different material 
+      and color too. Use resume paper in the following scenarios`;
     this.createSummary = () => {
       return {
         id: uniqid(),
-        summary: '',
+        summary: dummy,
       };
     };
 
@@ -62,8 +66,8 @@ class CVForm extends Component {
       preview: false,
       contact: {
         firstName: 'John',
-        lastName: 'Gamboa',
-        suffix: '',
+        lastName: 'Doe',
+        suffix: 'Jr.',
         email: 'x@gmail.com',
         phoneNumber: '9999-999-9999',
       },

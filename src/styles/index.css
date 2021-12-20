@@ -50,16 +50,23 @@ body,
   font-weight: bold;
 }
 
-/* removes page
-title, link, number, and current date & time
-when printing */
-@media print {
-  @page {
-      margin-top: 0;
-      margin-bottom: 0;
-  }
-  body {
-      padding-top: 72px;
-      padding-bottom: 72px ;
-  }
+@font-face {
+  font-family: "Roboto-Regular";
+  src: local("Roboto-Regular"),
+   url("../fonts/roboto/Roboto-Regular.ttf") format("truetype");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Roboto-Medium";
+  src: local("Roboto-Medium"),
+   url("../fonts/roboto/Roboto-Medium.ttf") format("truetype");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Roboto-Bold";
+  src: local("Roboto-Bold"),
+   url("../fonts/roboto/Roboto-Bold.ttf") format("truetype");
+  font-weight: bold;
 }

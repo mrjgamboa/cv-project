@@ -6,9 +6,9 @@ class Header extends Component {
     const { title } = this.props;
 
     return (
-      <div className={styles.Header}>
+      <header className={styles.Header}>
         <h1>{title}</h1>
-      </div>
+      </header>
     );
   }
 }
