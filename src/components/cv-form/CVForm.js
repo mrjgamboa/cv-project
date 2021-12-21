@@ -7,6 +7,7 @@ class CVForm extends Component {
   constructor(props) {
     super(props);
 
+    // delete this const
     const dummy = `Resume paper is a specific type of paper 
       that you use for your resume. Resume paper is thicker 
       than standard printing or copy paper and might be a different material 
@@ -25,39 +26,62 @@ class CVForm extends Component {
       };
     };
 
+    // delete this const
+    const dummy2 = [{ 
+      id: uniqid(),
+      sentence: 'accomplishment 1',
+    },{
+      id: uniqid(),
+      sentence: 'accomplishment 2',
+    }]
+
     this.createExperience = () => {
       return {
         id: uniqid(),
-        jobTitle: 'a',
-        company: 'b',
+        jobTitle: 'Production Assistant',
+        company: 'Clark Outsourcing',
         accomplishment: this.accomplishment(),
-        accomplishments: [], /* { id: uniqid(), text: '', }*/
-        startDate: '2021-12-14', // year-month e.g. 2020-08 on preview
-          // str = str.substring(0, str.length-3);
-        endDate: 'PRESENT', // year-month e.g. 2020-08
+        accomplishments: [...dummy2],
+        startDate: '2021-12-14',
+        endDate: 'PRESENT',
       };
     };
 
+    // delete this const
+    const dummy3 = [{ 
+      id: uniqid(),
+      sentence: 'accomplishment educ 1',
+    },{
+      id: uniqid(),
+      sentence: 'accomplishment educ 2',
+    }];
     this.createEducation = () => {
       return {
         id: uniqid(),
-        academicDegree: 'a', // initials
-        major: 'b', // e.g. Business Administration
-        schoolName: 'c',
+        academicDegree: 'BS', // initials
+        major: 'Information Technology', // e.g. Business Administration
+        schoolName: 'Nueva Ecija University of Science and Technology',
         accomplishment: this.accomplishment(),
-        accomplishments: [], /* { id: uniqid(), text: '', }*/
+        accomplishments: [...dummy3], /* { id: uniqid(), text: '', }*/
         startDate: '2021-12-14', // year only e.g. 2014
-        endDate: '2021-12-14',  // year only e.g. 2018
+        endDate: '2021-12-15',  // year only e.g. 2018
       };
     };
 
+    const dummy4 = [{
+      id: uniqid(),
+      text: 'skill 1',
+    },{
+      id: uniqid(),
+      text: 'skill 2',
+    }];
     this.createSkill = () => {
       return {
         skill: {
           id: uniqid(),
           text: '',
         },
-        skillList: [],
+        skillList: [...dummy4],
       };
     };
 
