@@ -3,7 +3,7 @@ import styles from '../../styles/modules/cv-form/CVOverview.module.css';
 
 class CVOverview extends Component {
   render() {
-    const { data, onClickBtn } = this.props;
+    const { data, onClickBtn, onClickBtnPrint } = this.props;
     const { 
       contact, summary, experience, education, skills
     } = data;
@@ -15,7 +15,7 @@ class CVOverview extends Component {
     
     const dateDiv = (item) => {
       return (
-        <div>
+        <div className={styles.dateDiv}>
           <p>
             {stringMinus3Char(item.startDate)}
             &nbsp;-&nbsp;
@@ -43,97 +43,113 @@ class CVOverview extends Component {
 
     return (
       <div className={styles.CVOverview}>
-        <section className={styles.contact}>
-          <h1>
-            {contact.firstName}&nbsp;
-            {contact.lastName}&nbsp;
-            {(contact.suffix) &&
-              contact.suffix
-            }
-          </h1>
-          <div>
-            <p>
-              <strong>Phone</strong>&nbsp;
-              {contact.phoneNumber}
-            </p>
-            <p>
-              <strong>Email</strong>&nbsp;
-              {contact.email}
-            </p>
-          </div>
-        </section>
-        {(summary.length === 1) &&
-          <section className={styles.summary}>
-            <p>
-              {summary[0].summary}
-            </p>
+        <div className={styles.buttonDiv}>
+          <button 
+            onClick={onClickBtn}
+            className={styles.edit}
+          >
+            Edit CV
+          </button>
+          <button 
+            onClick={onClickBtnPrint}
+          >
+            Print | Save as PDF
+          </button>
+        </div>
+        <div className={styles.container}>
+          <section className={styles.contact}>
+            <h1>
+              {contact.firstName}&nbsp;
+              {contact.lastName}&nbsp;
+              {(contact.suffix) &&
+                contact.suffix
+              }
+            </h1>
+            <div>
+              <p>
+                <strong>Phone</strong>&nbsp;
+                {contact.phoneNumber}
+              </p>
+              <p>
+                <strong>Email</strong>&nbsp;
+                {contact.email}
+              </p>
+            </div>
           </section>
-        }
-        {(experience.length > 0) &&
-          <section className={styles.experience}>
-            <h2>Experience</h2>
-            {experience.map((exp) => {
-              return (
-                <div 
-                  className={styles.sectionChildDiv}
-                  key={exp.id}
-                >
-                  {dateDiv(exp)}
-                  <div>
-                    <p><strong>{exp.jobTitle}</strong></p>
-                    <p><i>{exp.company}</i></p>
-                    {accomplishmentsUl(exp.accomplishments)}
-                  </div>
-                </div>
-              );
-            })}
-          </section>
-        }
-        {(education.length > 0) &&
-          <section>
-            <h2>Education</h2>
-            {education.map((educ) => {
-              return (
-                <div 
-                  className={styles.sectionChildDiv}
-                  key={educ.id}
-                >
-                  {dateDiv(educ)}
-                  <div>
-                    <p>
-                      <strong>
-                        {(educ.academicDegree) &&
-                          `${educ.academicDegree},${nbsp}`
-                        }
-                        {(educ.major) &&
-                          `${educ.major},${nbsp}`
-                        }
-                        {educ.schoolName}
-                      </strong>
-                    </p>
-                    {accomplishmentsUl(educ.accomplishments)}
-                  </div>
-                </div>
-              );
-            })}
-          </section>
-        }
-        {/* remove the bullet of skills section? */}
-        {(skills.length > 0) &&
-          <section>
-            <h2>Skills</h2>
-            <ul>
-              {skills.map((list) => {
+          {(summary.length === 1) &&
+            <section className={styles.summary}>
+              <div>
+                <p>
+                  {summary[0].summary}
+                </p>
+              </div>
+            </section>
+          }
+          {(experience.length > 0) &&
+            <section className={styles.experience}>
+              <h2>Experience</h2>
+              {experience.map((exp) => {
                 return (
-                  <li key={list.id}>
-                    {list.text}
-                  </li >
+                  <div 
+                    className={styles.sectionChildDiv}
+                    key={exp.id}
+                  >
+                    {dateDiv(exp)}
+                    <div>
+                      <p><strong>{exp.jobTitle}</strong></p>
+                      <p><i>{exp.company}</i></p>
+                      {accomplishmentsUl(exp.accomplishments)}
+                    </div>
+                  </div>
                 );
               })}
-            </ul>
-          </section>
-        }
-        <button onClick={onClickBtn}>Edit</button>
+            </section>
+          }
+          {(education.length > 0) &&
+            <section>
+              <h2>Education</h2>
+              {education.map((educ) => {
+                return (
+                  <div 
+                    className={styles.sectionChildDiv}
+                    key={educ.id}
+                  >
+                    {dateDiv(educ)}
+                    <div>
+                      <p>
+                        <strong>
+                          {(educ.academicDegree) &&
+                            `${educ.academicDegree},${nbsp}`
+                          }
+                          {(educ.major) &&
+                            `${educ.major},${nbsp}`
+                          }
+                          {educ.schoolName}
+                        </strong>
+                      </p>
+                      {accomplishmentsUl(educ.accomplishments)}
+                    </div>
+                  </div>
+                );
+              })}
+            </section>
+          }
+          {/* remove the bullet of skills section? */}
+          {(skills.length > 0) &&
+            <section>
+              <h2>Skills</h2>
+              <ul className={styles.skillsUl}>
+                {skills.map((list) => {
+                  return (
+                    <li key={list.id}>
+                      {list.text}
+                    </li >
+                  );
+                })}
+              </ul>
+            </section>
+          }
+        </div>
       </div>
     );
   }

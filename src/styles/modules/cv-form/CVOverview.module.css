@@ -1,11 +1,32 @@
 .CVOverview {
-  background-color: white;
-  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   font-family: "Roboto-Regular", sans-serif;
+  font-size: 14px;
+  padding: 1rem 1.5rem;
+}
+
+.CVOverview button {
+  border: 1px solid var(--ufoGreen);
+  border-radius: 3px;
+  cursor: pointer;
+  margin: 1rem 1.5rem;
+  padding: .25rem;
+}
+
+.CVOverview .container {
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  max-width: 819px;
+  padding: 48px;
+  width: 100%;
+  overflow: auto;
 }
 
 .CVOverview * {
-  line-height: 1.15;
+  line-height: 1.6;
   margin: 0;
   padding: 0;
 }
@@ -16,21 +37,76 @@
   font-family: "Roboto-Bold", sans-serif;
 }
 
+.CVOverview section > div {
+  margin: .5rem 0;
+} 
+
+.CVOverview h2 {
+  font-size: 18px;
+}
+
 .CVOverview strong {
-  font-family: "Roboto-Medium", sans-serif;
+  font-family: "Roboto-Bold", sans-serif;
+}
+
+.CVOverview .dateDiv {
+  margin-top: 2px;
+  width: 135px;
+}
+
+.CVOverview .sectionChildDiv {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.CVOverview .sectionChildDiv strong {
+  font-size: 16px;
+}
+
+.CVOverview .sectionChildDiv ul {
+  margin-left: .8rem;
+}
+
+.CVOverview .skillsUl {
+  list-style: none;
+  margin-left: 135px;
+}
+
+.CVOverview .skillsUl li:not(:last-child ) {
+  margin-bottom: .5rem;
+}
+
+@media only screen and (max-width: 720px) {
+  .CVOverview .skillsUl {
+    margin-left: 0;
+  }
 }
 
 @media print {
   @page {
-    width: 816px;
+    size: auto;
     /* removes page title, link, number, 
     and current date & time printing */
-    margin-top: 0;
-    margin-bottom: 0;
+    margin: 0 48px;
+  }
+  body  {
+    padding: 48px 0;
+  }
+  .CVOverview {
+    padding: 0;
+  }
+  .CVOverview .container {
+    padding: 0;
+    box-shadow: none;
+    overflow: visible;
   }
   header,
-  footer {
+  footer,
+  .buttonDiv {
     display: none;
   }
-  
+  a[href]:after {
+    content: none !important;
+}
 }

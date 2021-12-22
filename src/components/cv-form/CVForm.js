@@ -7,15 +7,10 @@ class CVForm extends Component {
   constructor(props) {
     super(props);
 
-    // delete this const
-    const dummy = `Resume paper is a specific type of paper 
-      that you use for your resume. Resume paper is thicker 
-      than standard printing or copy paper and might be a different material 
-      and color too. Use resume paper in the following scenarios`;
     this.createSummary = () => {
       return {
         id: uniqid(),
-        summary: dummy,
+        summary: '',
       };
     };
 
@@ -26,62 +21,38 @@ class CVForm extends Component {
       };
     };
 
-    // delete this const
-    const dummy2 = [{ 
-      id: uniqid(),
-      sentence: 'accomplishment 1',
-    },{
-      id: uniqid(),
-      sentence: 'accomplishment 2',
-    }]
-
     this.createExperience = () => {
       return {
         id: uniqid(),
-        jobTitle: 'Production Assistant',
-        company: 'Clark Outsourcing',
+        jobTitle: '',
+        company: '',
         accomplishment: this.accomplishment(),
-        accomplishments: [...dummy2],
-        startDate: '2021-12-14',
-        endDate: 'PRESENT',
+        accomplishments: [],
+        startDate: '',
+        endDate: '',
       };
     };
 
-    // delete this const
-    const dummy3 = [{ 
-      id: uniqid(),
-      sentence: 'accomplishment educ 1',
-    },{
-      id: uniqid(),
-      sentence: 'accomplishment educ 2',
-    }];
     this.createEducation = () => {
       return {
         id: uniqid(),
-        academicDegree: 'BS', // initials
-        major: 'Information Technology', // e.g. Business Administration
-        schoolName: 'Nueva Ecija University of Science and Technology',
+        academicDegree: '',
+        major: '',
+        schoolName: '',
         accomplishment: this.accomplishment(),
-        accomplishments: [...dummy3], /* { id: uniqid(), text: '', }*/
-        startDate: '2021-12-14', // year only e.g. 2014
-        endDate: '2021-12-15',  // year only e.g. 2018
+        accomplishments: [],
+        startDate: '',
+        endDate: '',
       };
     };
 
-    const dummy4 = [{
-      id: uniqid(),
-      text: 'skill 1',
-    },{
-      id: uniqid(),
-      text: 'skill 2',
-    }];
     this.createSkill = () => {
       return {
         skill: {
           id: uniqid(),
           text: '',
         },
-        skillList: [...dummy4],
+        skillList: [],
       };
     };
 
@@ -89,11 +60,11 @@ class CVForm extends Component {
       data: {},
       preview: false,
       contact: {
-        firstName: 'John',
-        lastName: 'Doe',
-        suffix: 'Jr.',
-        email: 'x@gmail.com',
-        phoneNumber: '9999-999-9999',
+        firstName: '',
+        lastName: '',
+        suffix: '',
+        email: '',
+        phoneNumber: '',
       },
       summary: [this.createSummary()],
       experience: [this.createExperience()],
@@ -102,6 +73,7 @@ class CVForm extends Component {
     };
 
     this.setPreviewToFalse = this.setPreviewToFalse.bind(this);
+    this.functionWindowPrint = this.functionWindowPrint.bind(this);
   }
 
   setStateV1 = (section, sectionValue, name, value) => {
@@ -281,6 +253,10 @@ class CVForm extends Component {
       ...this.state,
       preview: false,
     });
+  }
+
+  functionWindowPrint = () => {
+    window.print();
   }
 
   handleSubmit = () => {
@@ -501,7 +477,6 @@ class CVForm extends Component {
                       name='accomplishment'
                       id={`expAccomplishment${num}`}
                       value={exp.accomplishment.sentence}
-                      // need new function, replace handleChange
                       onChange={this.handleChange}
                     />
                     <button
@@ -663,7 +638,6 @@ class CVForm extends Component {
                       name='accomplishment'
                       id={`educAccomplishment${num}`}
                       value={educ.accomplishment.sentence}
-                      // need new function, replace handleChange
                       onChange={this.handleChange}
                     />
                     <button
@@ -772,21 +746,20 @@ class CVForm extends Component {
                 </details>
               </div>
             </section>
-            {// if valid form 
-              <button
-                type='button'
-                className={styles.submit}
-                onClick={this.handleSubmit}
-              >
-                Create CV
-              </button>
-            }
+            <button
+              type='button'
+              className={styles.submit}
+              onClick={this.handleSubmit}
+            >
+              Create CV
+            </button>
           </form>
         }
         {preview === true &&
           <CVOverview 
             data={data}
             onClickBtn={this.setPreviewToFalse}
+            onClickBtnPrint={this.functionWindowPrint}
           />
         }
       </div>
