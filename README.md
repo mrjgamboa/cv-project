@@ -8,5 +8,5 @@ A React app that allows users to construct their own CV/resume from scratch usin
 
 This online application was created to complete the "[Project: CV Application](https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript/lessons/cv-application)" from the [Javascript course](https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript) of [The Odin Project](https://www.theodinproject.com/) curriculum. The project was started with Create React App, and class components are used in this application.
 
-This application has been redesigned and improved and may be accessed here: 
+CV M4ker has been redesigned and improved and may be accessed here: 
 [https://github.com/mrjgamboa/cv-project-rewrite](https://github.com/mrjgamboa/cv-project-rewrite)
