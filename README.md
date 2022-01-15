@@ -1,14 +1,14 @@
 # CV M4ker
 
-A React app which allows users to create their own resume using a ready template and download it in a PDF format. This App uses class components.
+A React app that allows users to construct their own CV/resume from scratch using a ready-made template and then download it in PDF format.
 
-# Live Demo
+**Live Demo:** [https://mrjgamboa.github.io/cv-project/](https://mrjgamboa.github.io/cv-project/)
 
-[https://mrjgamboa.github.io/cv-project/](https://mrjgamboa.github.io/cv-project/)
+## Description
 
-# Getting Started with Create React App
+This online application was created to complete the "[Project: CV Application](https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript/lessons/cv-application)" from the [Javascript course](https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript) of [The Odin Project](https://www.theodinproject.com/) curriculum. The project was started with Create React App, and class components are used in this application.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This program has been redesigned and improved and may be accessed here: [https://github.com/mrjgamboa/cv-project-rewrite](https://github.com/mrjgamboa/cv-project-rewrite)
 
 ## Available Scripts
 
@@ -46,33 +46,3 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
